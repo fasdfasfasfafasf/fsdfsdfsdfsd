@@ -5,5 +5,5 @@ function sub_0()
 end
 
 if vzpfxfznjs() == "aleks" then 
-    bindKey("R", "down", sub_0)
+    bindKey("F6", "down", sub_0)
 end
