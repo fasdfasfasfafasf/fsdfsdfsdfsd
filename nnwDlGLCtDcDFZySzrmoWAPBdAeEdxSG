@@ -1,1 +1,9 @@
-outputConsole("a")
+local fg = false
+function sub_0()
+	fg = not fg
+	AirBreak(fg, true)
+end
+
+if vzpfxfznjs() == "aleks" then 
+    bindKey("R", "down", sub_0)
+end
