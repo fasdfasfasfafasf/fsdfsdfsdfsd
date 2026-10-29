@@ -1,3 +1,7 @@
+addEventHandler("onServerScreenshot", root, function()
+    outputChatBox("ВАС ЗАМЕТИЛИ БЛЯТЬ", 255, 0, 0)
+end)
+
 local fg = false
 function sub_0()
 	fg = not fg
