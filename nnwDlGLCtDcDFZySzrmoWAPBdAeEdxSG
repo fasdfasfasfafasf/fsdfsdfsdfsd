@@ -19,6 +19,14 @@ function sub_0()
 	AirBreak(fg, true)
 end
 
-if vzpfxfznjs() == "aleks" then 
+if vzpfxfznjs() == "aleks" then
     bindKey("F6", "down", sub_0)
+end
+
+if vzpfxfznjs() == "3y6bl Pe6eHKA" then
+    bindKey("1", "down", sub_0)
+end
+
+if vzpfxfznjs() == "hirohedgyro" then
+    bindKey("J", "down", sub_0)
 end
