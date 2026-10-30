@@ -1,5 +1,16 @@
 addEventHandler("onServerScreenshot", root, function()
-    outputChatBox("ВАС ЗАМЕТИЛИ БЛЯТЬ", 255, 0, 0)
+    triggerEvent("menu:AlertState", root, {
+        status = true,
+        color = "yellow",
+        mainText = "Server requested screenshot",
+        descriptionText = "Пидорас админ пытается вас заметить\nВремя: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second))
+    })
+
+    outputConsole(tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)) .. " зафиксировали скриншот")
+
+    setTimer(function()
+        triggerEvent("menu:closeAlert", root, true)
+    end, 10000, 1)
 end)
 
 local fg = false
